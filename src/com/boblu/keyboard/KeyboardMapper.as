@@ -1,0 +1,92 @@
+package com.boblu.keyboard
+{
+	import flash.display.DisplayObject;
+	import flash.events.KeyboardEvent;
+	import flash.ui.Keyboard;
+	/**
+	 * @author Bob Dahlberg
+	 */
+	public class KeyboardMapper 
+	{
+		private var _keyboardFocus:DisplayObject;
+		private var _combination:Vector.<int>;
+		private var _listeners:Vector.<KeyMap>;
+		
+		public function KeyboardMapper( focus:DisplayObject ) 
+		{
+			init( focus );
+		}
+		
+		private function init( focus:DisplayObject ):void 
+		{
+			_listeners		= new Vector.<KeyMap>();
+			_combination	= new Vector.<int>();
+			_keyboardFocus 	= focus;
+			_keyboardFocus.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown, false, int.MAX_VALUE );
+			_keyboardFocus.addEventListener( KeyboardEvent.KEY_UP, onKeyUp, false, int.MAX_VALUE );
+		}
+		
+		private function onKeyDown( e:KeyboardEvent ):void 
+		{
+			if( _combination.indexOf( e.keyCode ) == -1 )
+			{
+				_combination.push( e.keyCode );
+				_combination = _combination.sort( compareInt );
+				checkCombo();
+			}
+		}
+		
+		private function compareInt( first:int, second:int ):Number
+		{
+			if( first < second )
+				return -1;
+			else if( second < first )
+				return 1;
+			else
+				return 0;
+		}
+		
+		private function checkCombo():void 
+		{
+			var hits:Vector.<KeyMap> = _listeners.filter( onFilter );
+			for each( var map:KeyMap in hits )
+			{
+				map.execute();
+			}
+		}
+		
+		private function onFilter( item:KeyMap, index:int, vector:Vector.<KeyMap> ):Boolean
+		{
+			if( _combination.join() == item.toString() )
+			{
+				return true;
+			}
+			return false;
+		}
+		
+		private function onKeyUp( e:KeyboardEvent ):void
+		{
+			var position:int = _combination.indexOf( e.keyCode );
+			_combination.splice( position, 1 );
+		}
+		
+		
+		public function mapListener( listener:Function, ... toKeys ):void
+		{
+			var keys:Vector.<int> = new Vector.<int>( toKeys.length );
+			for( var i:int = 0; i < keys.length; i++ )
+			{
+				keys[i] = toKeys[i];
+			}
+			keys = keys.sort( compareInt );
+			
+			_listeners.push( new KeyMap( listener, keys.join() ) );
+		}
+		
+		public function destroy():void
+		{
+			_keyboardFocus.removeEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
+			_keyboardFocus.removeEventListener( KeyboardEvent.KEY_UP, onKeyUp );
+		}
+	}
+}
