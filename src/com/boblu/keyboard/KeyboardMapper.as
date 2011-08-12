@@ -35,6 +35,7 @@ package com.boblu.keyboard
 			if( _combination.indexOf( e.keyCode ) == -1 )
 			{
 				_keysDown++;
+				_combinationHit = false;
 				_combination.push( e.keyCode );
 				_combination = _combination.sort( compareInt );
 			}

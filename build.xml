@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="KeyboardMapper" basedir="." default="all">
+	
+	<property name="FLEX_HOME" value="C:/bin/flex/flex4_1" />
+	<property name="flex.task" value="${FLEX_HOME}/ant/lib/flexTasks.jar" />
+	<taskdef resource="flexTasks.tasks" classpath="${flex.task}"/>
+	
+	<target name="all" description="Build keyboard mapper lib">
+		<compc output="bin/KeyboardMapper-0.1.swc" include-classes="com.boblu.keyboard.KeyboardMapper" target-player="10.1">
+			<source-path path-element="src" />
+			<compiler.external-library-path dir="${FLEX_HOME}/frameworks/libs/player/10.1">
+				<include name="playerglobal.swc" />
+			</compiler.external-library-path>
+			<compiler.external-library-path dir="${FLEX_HOME}/frameworks/libs">
+				<include name="framework.swc" />
+			</compiler.external-library-path>
+		</compc>
+	</target>
+</project>
