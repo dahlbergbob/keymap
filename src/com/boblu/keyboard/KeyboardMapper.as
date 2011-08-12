@@ -51,6 +51,7 @@ package com.boblu.keyboard
 		
 		private function checkCombo():void 
 		{
+			
 			var hits:Vector.<KeyMap> = _listeners.filter( onFilter );
 			for each( var map:KeyMap in hits )
 			{
