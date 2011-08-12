@@ -31,6 +31,7 @@ package
 			
 			var keyMap:KeyboardMapper = new KeyboardMapper( stage );
 			keyMap.mapListener( AB, Keyboard.A, Keyboard.B );
+			keyMap.mapListener( AC, Keyboard.A, Keyboard.C );
 			keyMap.mapListener( A, Keyboard.A );
 			keyMap.mapListener( ctrlA, Keyboard.CONTROL, Keyboard.A );
 			keyMap.mapListener( ctrl, Keyboard.CONTROL );
@@ -54,6 +55,11 @@ package
 		private function AB():void 
 		{
 			_text.appendText( "\nAB" );
+		}
+		
+		private function AC():void 
+		{
+			_text.appendText( "\nAC" );
 		}
 	}
 }
