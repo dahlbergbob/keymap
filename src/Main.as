@@ -35,7 +35,7 @@ package
 		
 		private function ctrlA():void 
 		{
-			trace( "CTRL + A" );
+			trace( "CTRL + A " );
 		}
 		
 		private function A():void 
