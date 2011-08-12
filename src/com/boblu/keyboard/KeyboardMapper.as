@@ -13,6 +13,7 @@ package com.boblu.keyboard
 		private var _listeners:Vector.<KeyMap>;
 		private var _keysHeld:int;
 		private var _keysDown:int;
+		private var _combinationHit:Boolean;
 		
 		public function KeyboardMapper( focus:DisplayObject ) 
 		{
@@ -23,6 +24,7 @@ package com.boblu.keyboard
 		{
 			_keysHeld		= 0;
 			_keysDown		= 0;
+			_combinationHit	= false;
 			_listeners		= new Vector.<KeyMap>();
 			_combination	= new Vector.<int>();
 			_keyboardFocus 	= focus;
@@ -51,10 +53,10 @@ package com.boblu.keyboard
 		
 		private function checkCombo():void 
 		{
-			
 			var hits:Vector.<KeyMap> = _listeners.filter( onFilter );
 			for each( var map:KeyMap in hits )
 			{
+				_combinationHit = true;
 				map.execute();
 			}
 		}
@@ -70,7 +72,6 @@ package com.boblu.keyboard
 		
 		private function onKeyUp( e:KeyboardEvent ):void
 		{
-			checkCombo();
 			var position:int = _combination.indexOf( e.keyCode );
 			_combination.splice( position, 1 );
 		}

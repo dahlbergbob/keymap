@@ -3,6 +3,8 @@ package
 	import com.boblu.keyboard.KeyboardMapper;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
 	import flash.ui.Keyboard;
 	
 	/**
@@ -11,6 +13,7 @@ package
 	 */
 	public class Main extends Sprite 
 	{
+		private var _text:TextField;
 		
 		public function Main():void 
 		{
@@ -21,6 +24,11 @@ package
 		private function init( e:Event = null ):void 
 		{
 			removeEventListener( Event.ADDED_TO_STAGE, init );
+			
+			_text = new TextField();
+			_text.autoSize = TextFieldAutoSize.LEFT;
+			addChild( _text );
+			
 			var keyMap:KeyboardMapper = new KeyboardMapper( stage );
 			keyMap.mapListener( AB, Keyboard.A, Keyboard.B );
 			keyMap.mapListener( A, Keyboard.A );
@@ -30,22 +38,22 @@ package
 		
 		private function ctrl():void 
 		{
-			trace( "CTRL" );
+			_text.appendText( "\nCTRL" );
 		}
 		
 		private function ctrlA():void 
 		{
-			trace( "CTRL + A" );
+			_text.appendText( "\nCTRL + A" );
 		}
 		
 		private function A():void 
 		{
-			trace( "A" );
+			_text.appendText( "\nA" );
 		}
 		
 		private function AB():void 
 		{
-			trace( "A + B" );
+			_text.appendText( "\nAB" );
 		}
 	}
 }
