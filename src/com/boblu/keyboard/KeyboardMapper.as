@@ -11,7 +11,6 @@ package com.boblu.keyboard
 		private var _keyboardFocus:DisplayObject;
 		private var _combination:Vector.<int>;
 		private var _listeners:Vector.<KeyMap>;
-		private var _keysHeld:int;
 		private var _keysDown:int;
 		private var _combinationHit:Boolean;
 		
@@ -22,7 +21,6 @@ package com.boblu.keyboard
 		
 		private function init( focus:DisplayObject ):void 
 		{
-			_keysHeld		= 0;
 			_keysDown		= 0;
 			_combinationHit	= false;
 			_listeners		= new Vector.<KeyMap>();
@@ -36,8 +34,32 @@ package com.boblu.keyboard
 		{
 			if( _combination.indexOf( e.keyCode ) == -1 )
 			{
+				_keysDown++;
 				_combination.push( e.keyCode );
 				_combination = _combination.sort( compareInt );
+			}
+		}
+		
+		private function onKeyUp( e:KeyboardEvent ):void
+		{
+			if( !_combinationHit )
+				checkCombo();
+			
+			_keysDown--;
+			var position:int = _combination.indexOf( e.keyCode );
+			_combination.splice( position, 1 );
+			
+			if( _keysDown == 0 )
+				_combinationHit = false;
+		}
+		
+		private function checkCombo():void 
+		{
+			var hits:Vector.<KeyMap> = _listeners.filter( onFilter );
+			for each( var map:KeyMap in hits )
+			{
+				_combinationHit = true;
+				map.execute();
 			}
 		}
 		
@@ -51,16 +73,6 @@ package com.boblu.keyboard
 				return 0;
 		}
 		
-		private function checkCombo():void 
-		{
-			var hits:Vector.<KeyMap> = _listeners.filter( onFilter );
-			for each( var map:KeyMap in hits )
-			{
-				_combinationHit = true;
-				map.execute();
-			}
-		}
-		
 		private function onFilter( item:KeyMap, index:int, vector:Vector.<KeyMap> ):Boolean
 		{
 			if( _combination.join() == item.toString() )
@@ -68,12 +80,6 @@ package com.boblu.keyboard
 				return true;
 			}
 			return false;
-		}
-		
-		private function onKeyUp( e:KeyboardEvent ):void
-		{
-			var position:int = _combination.indexOf( e.keyCode );
-			_combination.splice( position, 1 );
 		}
 		
 		
