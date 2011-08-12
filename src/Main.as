@@ -44,6 +44,7 @@ package
 		
 		private function ctrlA():void 
 		{
+			// Probably only works in browser
 			_text.appendText( "\nCTRL + A" );
 		}
 		
