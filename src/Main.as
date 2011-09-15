@@ -33,34 +33,38 @@ package
 			keyMap.mapListener( AB, Keyboard.A, Keyboard.B );
 			keyMap.mapListener( AC, Keyboard.A, Keyboard.C );
 			keyMap.mapListener( A, Keyboard.A );
-			keyMap.mapListener( ctrlA, Keyboard.CONTROL, Keyboard.A );
 			keyMap.mapListener( ctrl, Keyboard.CONTROL );
+			keyMap.mapListener( ctrlA, Keyboard.CONTROL, Keyboard.A );	// Only works in browser
 		}
 		
 		private function ctrl():void 
 		{
-			_text.appendText( "\nCTRL" );
+			log( "CTRL" );
 		}
 		
 		private function ctrlA():void 
 		{
-			// Probably only works in browser
-			_text.appendText( "\nCTRL + A" );
+			log( "CTRL + A" );
 		}
 		
 		private function A():void 
 		{
-			_text.appendText( "\nA" );
+			log( "A" );
 		}
 		
 		private function AB():void 
 		{
-			_text.appendText( "\nAB" );
+			log( "AB" );
 		}
 		
 		private function AC():void 
 		{
-			_text.appendText( "\nAC" );
+			log( "AC" );
+		}
+		
+		private function log( message:String ):void
+		{
+			_text.appendText( message +"\n" );
 		}
 	}
 }

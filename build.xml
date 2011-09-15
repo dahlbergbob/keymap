@@ -3,12 +3,14 @@
 	
 	<property name="FLEX_HOME" value="C:/bin/flex/flex4_1" />
 	<property name="flex.task" value="${FLEX_HOME}/ant/lib/flexTasks.jar" />
+	<property name="flash.version" value="10.1" />
 	<taskdef resource="flexTasks.tasks" classpath="${flex.task}"/>
 	
 	<target name="all" description="Build keyboard mapper lib">
-		<compc output="bin/KeyboardMapper-0.1.swc" include-classes="com.boblu.keyboard.KeyboardMapper" target-player="10.1">
+		<input message="Set the current build version:" defaultvalue="debug" addproperty="version" />
+		<compc output="bin/KeyboardMapper-${version}.swc" include-classes="com.boblu.keyboard.KeyboardMapper" target-player="${flash.version}">
 			<source-path path-element="src" />
-			<compiler.external-library-path dir="${FLEX_HOME}/frameworks/libs/player/10.1">
+			<compiler.external-library-path dir="${FLEX_HOME}/frameworks/libs/player/${flash.version}">
 				<include name="playerglobal.swc" />
 			</compiler.external-library-path>
 			<compiler.external-library-path dir="${FLEX_HOME}/frameworks/libs">
