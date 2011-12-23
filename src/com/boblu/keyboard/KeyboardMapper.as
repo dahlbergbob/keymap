@@ -19,7 +19,7 @@ package com.boblu.keyboard
 {
 	import flash.display.DisplayObject;
 	import flash.events.KeyboardEvent;
-	import flash.ui.Keyboard;
+	import flash.ui.Keyboard; 
 	
 	/**
 	 * A Keyboard Mapper class that handles the combination of keybaord presses for you.
