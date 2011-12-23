@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<project name="KeyboardMapper" basedir="." default="all">
+<project name="KeyboardMapper" basedir=".." default="all">
 	
 	<property name="FLEX_HOME" value="C:/bin/flex/flex4_1" />
 	<property name="flex.task" value="${FLEX_HOME}/ant/lib/flexTasks.jar" />
@@ -9,7 +9,7 @@
 	<target name="all" description="Build keyboard mapper lib">
 		<input message="Set the current build version:" defaultvalue="debug" addproperty="version" />
 		<compc output="bin/KeyboardMapper-${version}.swc" include-classes="com.boblu.keyboard.KeyboardMapper" target-player="${flash.version}">
-			<source-path path-element="src" />
+			<source-path path-element="${basedir}/src" />
 			<compiler.external-library-path dir="${FLEX_HOME}/frameworks/libs/player/${flash.version}">
 				<include name="playerglobal.swc" />
 			</compiler.external-library-path>
